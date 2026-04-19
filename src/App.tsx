@@ -1,9 +1,6 @@
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { 
-  Scale, 
-  Code2, 
-  PenTool, 
   BrainCircuit, 
   Globe2, 
   MessageSquareQuote, 
@@ -13,7 +10,14 @@ import {
   Flame,
   Github,
   ExternalLink,
-  X
+  X,
+  Terminal,
+  Layout,
+  Database,
+  Users,
+  Quote,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 function Hero() {
@@ -188,12 +192,130 @@ function Interests() {
   );
 }
 
+const skillCategories = [
+  {
+    title: "Programming",
+    icon: <Terminal size={24} />,
+    skills: ["TypeScript", "JavaScript", "Python", "Solidity", "C++"]
+  },
+  {
+    title: "Frameworks",
+    icon: <Layout size={24} />,
+    skills: ["React", "Next.js", "Node.js", "FastAPI", "Tailwind CSS"]
+  },
+  {
+    title: "Technologies",
+    icon: <Database size={24} />,
+    skills: ["Git", "PostgreSQL", "MongoDB", "Hardhat", "Docker"]
+  },
+  {
+    title: "Soft Skills",
+    icon: <Users size={24} />,
+    skills: ["Leadership", "Public Speaking", "Creative Writing", "Research", "Teamwork"]
+  }
+];
+
+function Skills() {
+  return (
+    <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-white/10 overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-20 text-center"
+      >
+        <h3 className="font-mono text-sm tracking-widest uppercase text-white/50 mb-4 drop-shadow-sm">Expertise</h3>
+        <h2 className="font-serif text-4xl md:text-6xl">Proficiencies & <span className="italic text-white/50">Powers.</span></h2>
+      </motion.div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {skillCategories.map((category, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: i * 0.1 }}
+            className="group"
+          >
+            <div className="flex items-center gap-3 mb-6 text-white/40 group-hover:text-white transition-colors">
+              <div className="p-2 border border-white/10 rounded-lg bg-white/5 group-hover:bg-white group-hover:text-black transition-all">
+                {category.icon}
+              </div>
+              <h4 className="font-mono text-xs uppercase tracking-[0.2em]">{category.title}</h4>
+            </div>
+            
+            <ul className="space-y-4">
+              {category.skills.map((skill, j) => (
+                <motion.li 
+                  key={j}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: (i * 0.1) + (j * 0.05) }}
+                  className="flex items-center gap-3 text-white/60 font-light hover:text-white transition-colors decoration-white/20 hover:decoration-white underline underline-offset-4 decoration-1"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-white/20"></span>
+                  {skill}
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+const fragments = [
+  "Logic is the scaffold; language is the breath.",
+  "In the quiet of the compiler, I find the rhythm of a stanza.",
+  "The law is a code we inherit; the future is the one we write.",
+  "Between 0 and 1, there is infinitely more than just void."
+];
+
+function Fragments() {
+  return (
+    <section className="py-32 bg-zinc-900/30 border-y border-white/5 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+          <div className="md:w-1/3">
+            <h3 className="font-mono text-sm tracking-widest uppercase text-white/30 mb-4">Fragments</h3>
+            <h2 className="font-serif text-4xl md:text-5xl italic leading-tight">Poetry in <br/> the Machine.</h2>
+          </div>
+          <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-8">
+            {fragments.map((fragment, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.2 }}
+                className="relative p-6 border-l border-white/10"
+              >
+                <Quote size={16} className="text-white/20 mb-4" />
+                <p className="font-serif text-lg md:text-xl text-white/60 leading-relaxed italic">
+                  {fragment}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 const projects = [
   {
     title: "LexAI",
     description: "An AI-powered legal research assistant designed to help law students navigate complex case files using RAG and LLMs.",
     detailedDescription: "LexAI is a comprehensive suite aiming to decentralize legal knowledge. By utilizing Retrieval-Augmented Generation (RAG) atop massive corpuses of case law, it allows law students and practitioners to conversationalize with historic judgements. Built with Next.js, Python FastAPI, and LangChain, it solves the immediate pain-point of endless manual cross-referencing.",
-    image: "https://picsum.photos/seed/lawlibrary/800/500?blur=2",
+    images: [
+      "https://picsum.photos/seed/lawlibrary/800/500?blur=1",
+      "https://picsum.photos/seed/courtroom/800/500?blur=1",
+      "https://picsum.photos/seed/statute/800/500?blur=1"
+    ],
     tags: ["Next.js", "Python", "OpenAI", "LangChain"],
     github: "https://github.com/harbhite",
     live: "#"
@@ -202,7 +324,11 @@ const projects = [
     title: "VerseDrop",
     description: "A decentralized platform for poets to publish, share, and tokenize their literary works as NFTs.",
     detailedDescription: "In an era of fleeting attention, VerseDrop provides digital permanence to poetry. Writers can mint their stanzas as distinct non-fungible tokens, creating a verified provenance of creative thought. The platform integrates seamlessly with IPFS for storage and uses optimized Solidity contracts to keep minting gas costs incredibly low for emerging artists.",
-    image: "https://picsum.photos/seed/poetrybook/800/500?blur=1",
+    images: [
+      "https://picsum.photos/seed/poetrybook/800/500?blur=1",
+      "https://picsum.photos/seed/scroll/800/500?blur=1",
+      "https://picsum.photos/seed/quill/800/500?blur=1"
+    ],
     tags: ["React", "Solidity", "Web3", "Tailwind"],
     github: "https://github.com/harbhite",
     live: "#"
@@ -211,7 +337,11 @@ const projects = [
     title: "Community DAO Builder",
     description: "An open-source toolkit for community leaders to seamlessly spin up governance structures and voting mechanisms.",
     detailedDescription: "A fully open-source TypeScript and Node.js toolkit designed to make Decentralized Autonomous Organizations accessible to non-technical community leaders. It abstracts the complexity of deploying governor contracts and provides a plug-and-play frontend for proposing, debating, and executing on-chain proposals transparently.",
-    image: "https://picsum.photos/seed/dao/800/500?blur=1",
+    images: [
+      "https://picsum.photos/seed/dao/800/500?blur=1",
+      "https://picsum.photos/seed/blockchain/800/500?blur=1",
+      "https://picsum.photos/seed/network/800/500?blur=1"
+    ],
     tags: ["TypeScript", "Node.js", "Smart Contracts"],
     github: "https://github.com/harbhite",
     live: "#"
@@ -220,11 +350,13 @@ const projects = [
 
 function Projects() {
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Lock body scroll when modal is open
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = 'hidden';
+      setCurrentImageIndex(0);
     } else {
       document.body.style.overflow = 'auto';
     }
@@ -232,6 +364,18 @@ function Projects() {
       document.body.style.overflow = 'auto';
     };
   }, [selectedProject]);
+
+  const nextImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prev) => (prev + 1) % selectedProject.images.length);
+    }
+  };
+
+  const prevImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prev) => (prev - 1 + selectedProject.images.length) % selectedProject.images.length);
+    }
+  };
 
   return (
     <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-white/10">
@@ -311,41 +455,88 @@ function Projects() {
                 <X size={20} />
               </button>
               
-              <div className="relative h-48 sm:h-72 w-full overflow-hidden border-b border-white/10">
-                <img 
-                  src={selectedProject.image} 
-                  alt={selectedProject.title} 
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 right-6">
-                  <h3 className="font-serif text-4xl sm:text-5xl mb-4 drop-shadow-lg">{selectedProject.title}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedProject.tags.map((tag, j) => (
-                      <span key={j} className="font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 border border-white/20 rounded-full text-white/80 bg-black/50 backdrop-blur-md">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+              <div className="relative h-64 sm:h-96 w-full overflow-hidden border-b border-white/10 group/slider">
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={currentImageIndex}
+                    src={selectedProject.images[currentImageIndex]} 
+                    alt={`${selectedProject.title} screenshot ${currentImageIndex + 1}`} 
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                </AnimatePresence>
+                
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/20 to-transparent"></div>
+                
+                {selectedProject.images.length > 1 && (
+                  <>
+                    <button 
+                      onClick={prevImage}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-md border border-white/10 opacity-0 group-hover/slider:opacity-100 transition-opacity"
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
+                    <button 
+                      onClick={nextImage}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-md border border-white/10 opacity-0 group-hover/slider:opacity-100 transition-opacity"
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                      {selectedProject.images.map((_, i) => (
+                        <div 
+                          key={i} 
+                          className={`w-1.5 h-1.5 rounded-full transition-all ${i === currentImageIndex ? 'bg-white w-4' : 'bg-white/30'}`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+                
+                <div className="absolute top-6 left-6 pr-12">
+                  <h3 className="font-serif text-4xl sm:text-5xl mb-2 drop-shadow-lg">{selectedProject.title}</h3>
                 </div>
               </div>
               
               <div className="p-6 md:p-10">
-                <h4 className="font-mono text-sm tracking-widest uppercase text-white/50 mb-6 border-b border-white/10 pb-4">
-                  Project Overview
-                </h4>
-                <p className="text-white/80 font-light leading-relaxed text-lg sm:text-xl mb-10">
-                  {selectedProject.detailedDescription}
-                </p>
-                
-                <div className="flex flex-wrap items-center gap-4">
-                  <a href={selectedProject.live} className="flex items-center gap-2 px-6 py-3 bg-white text-black hover:bg-white/90 rounded-full transition-colors font-medium" target="_blank" rel="noreferrer">
-                    <ExternalLink size={18} /> View Live Demo
-                  </a>
-                  <a href={selectedProject.github} className="flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-white transition-colors font-medium" target="_blank" rel="noreferrer">
-                    <Github size={18} /> Source Code
-                  </a>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                  <div className="lg:col-span-2">
+                    <h4 className="font-mono text-xs tracking-widest uppercase text-white/30 mb-6 border-b border-white/5 pb-4">
+                      Context
+                    </h4>
+                    <p className="text-white/80 font-light leading-relaxed text-lg sm:text-xl">
+                      {selectedProject.detailedDescription}
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h4 className="font-mono text-xs tracking-widest uppercase text-white/30 mb-6 border-b border-white/5 pb-4">
+                      Technologies
+                    </h4>
+                    <div className="flex flex-wrap gap-2 mb-10">
+                      {selectedProject.tags.map((tag, j) => (
+                        <span key={j} className="font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 border border-white/20 rounded-full text-white/80 bg-white/5">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    
+                    <h4 className="font-mono text-xs tracking-widest uppercase text-white/30 mb-6 border-b border-white/5 pb-4">
+                      Links
+                    </h4>
+                    <div className="flex flex-col gap-3">
+                      <a href={selectedProject.live} className="flex items-center justify-between px-6 py-3 bg-white text-black hover:bg-white/90 rounded-xl transition-colors font-medium text-sm" target="_blank" rel="noreferrer">
+                        View Live Demo <ExternalLink size={16} />
+                      </a>
+                      <a href={selectedProject.github} className="flex items-center justify-between px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white transition-colors font-medium text-sm" target="_blank" rel="noreferrer">
+                        Source Code <Github size={16} />
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -391,6 +582,8 @@ export default function App() {
       <Marquee />
       <About />
       <Interests />
+      <Skills />
+      <Fragments />
       <Projects />
       <Footer />
     </div>
