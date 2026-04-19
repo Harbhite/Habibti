@@ -11,7 +11,7 @@
 
 body {
   font-family: var(--font-sans);
-  @apply bg-white text-black dark:bg-[#050505] dark:text-[#F5F5F5];
+  @apply bg-[#f5f2ed] text-[#1a1a1a] dark:bg-[#050505] dark:text-[#F5F5F5];
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -21,12 +21,12 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  @apply bg-white dark:bg-[#050505]; 
+  @apply bg-[#f5f2ed] dark:bg-[#050505]; 
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-zinc-300 dark:bg-zinc-800; 
+  @apply bg-zinc-400/30 dark:bg-zinc-800; 
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-zinc-400 dark:bg-zinc-700; 
+  @apply bg-zinc-400/50 dark:bg-zinc-700; 
 }
 
