@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform } from 'motion/react';
-import { useRef } from 'react';
+import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
 import { 
   Scale, 
   Code2, 
@@ -12,7 +12,8 @@ import {
   Bitcoin,
   Flame,
   Github,
-  ExternalLink
+  ExternalLink,
+  X
 } from 'lucide-react';
 
 function Hero() {
@@ -191,6 +192,8 @@ const projects = [
   {
     title: "LexAI",
     description: "An AI-powered legal research assistant designed to help law students navigate complex case files using RAG and LLMs.",
+    detailedDescription: "LexAI is a comprehensive suite aiming to decentralize legal knowledge. By utilizing Retrieval-Augmented Generation (RAG) atop massive corpuses of case law, it allows law students and practitioners to conversationalize with historic judgements. Built with Next.js, Python FastAPI, and LangChain, it solves the immediate pain-point of endless manual cross-referencing.",
+    image: "https://picsum.photos/seed/lawlibrary/800/500?blur=2",
     tags: ["Next.js", "Python", "OpenAI", "LangChain"],
     github: "#",
     live: "#"
@@ -198,6 +201,8 @@ const projects = [
   {
     title: "VerseDrop",
     description: "A decentralized platform for poets to publish, share, and tokenize their literary works as NFTs.",
+    detailedDescription: "In an era of fleeting attention, VerseDrop provides digital permanence to poetry. Writers can mint their stanzas as distinct non-fungible tokens, creating a verified provenance of creative thought. The platform integrates seamlessly with IPFS for storage and uses optimized Solidity contracts to keep minting gas costs incredibly low for emerging artists.",
+    image: "https://picsum.photos/seed/poetrybook/800/500?blur=1",
     tags: ["React", "Solidity", "Web3", "Tailwind"],
     github: "#",
     live: "#"
@@ -205,6 +210,8 @@ const projects = [
   {
     title: "Community DAO Builder",
     description: "An open-source toolkit for community leaders to seamlessly spin up governance structures and voting mechanisms.",
+    detailedDescription: "A fully open-source TypeScript and Node.js toolkit designed to make Decentralized Autonomous Organizations accessible to non-technical community leaders. It abstracts the complexity of deploying governor contracts and provides a plug-and-play frontend for proposing, debating, and executing on-chain proposals transparently.",
+    image: "https://picsum.photos/seed/dao/800/500?blur=1",
     tags: ["TypeScript", "Node.js", "Smart Contracts"],
     github: "#",
     live: "#"
@@ -212,6 +219,20 @@ const projects = [
 ];
 
 function Projects() {
+  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [selectedProject]);
+
   return (
     <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-white/10">
       <motion.div
@@ -228,16 +249,17 @@ function Projects() {
         {projects.map((project, i) => (
           <motion.div
             key={i}
+            onClick={() => setSelectedProject(project)}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="group relative bg-[#0a0a0a] border border-white/10 p-8 rounded-3xl overflow-hidden hover:bg-[#111] transition-colors flex flex-col justify-between min-h-[320px]"
+            className="group relative bg-[#0a0a0a] border border-white/10 p-8 rounded-3xl overflow-hidden hover:bg-[#111] cursor-pointer transition-colors flex flex-col justify-between min-h-[320px]"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="relative z-10 flex flex-col h-full">
+            <div className="relative z-10 flex flex-col h-full pointer-events-none">
               <div>
-                <h4 className="font-serif text-2xl mb-4">{project.title}</h4>
+                <h4 className="font-serif text-2xl mb-4 text-white group-hover:text-white/90">{project.title}</h4>
                 <p className="text-white/60 font-light leading-relaxed text-sm md:text-base mb-6">
                   {project.description}
                 </p>
@@ -246,17 +268,17 @@ function Projects() {
               <div className="mt-auto space-y-6">
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag, j) => (
-                    <span key={j} className="font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 border border-white/20 rounded-full text-white/50 bg-white/5 disabled:opacity-50">
+                    <span key={j} className="font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 border border-white/20 rounded-full text-white/50 bg-white/5">
                       {tag}
                     </span>
                   ))}
                 </div>
                 
-                <div className="flex items-center gap-4 pt-6 border-t border-white/10">
-                  <a href={project.github} className="text-white/40 hover:text-white transition-colors" target="_blank" rel="noreferrer" aria-label="GitHub Repository">
+                <div className="flex items-center gap-4 pt-6 border-t border-white/10 pointer-events-auto" onClick={(e) => e.stopPropagation()}>
+                  <a href={project.github} className="text-white/40 hover:text-white transition-colors p-2 -ml-2" target="_blank" rel="noreferrer" aria-label="GitHub Repository">
                     <Github size={20} strokeWidth={1.5} />
                   </a>
-                  <a href={project.live} className="text-white/40 hover:text-white transition-colors" target="_blank" rel="noreferrer" aria-label="Live Demo">
+                  <a href={project.live} className="text-white/40 hover:text-white transition-colors p-2" target="_blank" rel="noreferrer" aria-label="Live Demo">
                     <ExternalLink size={20} strokeWidth={1.5} />
                   </a>
                 </div>
@@ -265,6 +287,71 @@ function Projects() {
           </motion.div>
         ))}
       </div>
+
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedProject(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/80 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#0a0a0a] border border-white/10 rounded-3xl shadow-2xl"
+            >
+              <button 
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-4 right-4 p-2 bg-black/50 hover:bg-white/10 backdrop-blur-md border border-white/10 rounded-full transition-colors z-20 text-white/70 hover:text-white cursor-pointer"
+              >
+                <X size={20} />
+              </button>
+              
+              <div className="relative h-48 sm:h-72 w-full overflow-hidden border-b border-white/10">
+                <img 
+                  src={selectedProject.image} 
+                  alt={selectedProject.title} 
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent"></div>
+                <div className="absolute bottom-6 left-6 right-6">
+                  <h3 className="font-serif text-4xl sm:text-5xl mb-4 drop-shadow-lg">{selectedProject.title}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedProject.tags.map((tag, j) => (
+                      <span key={j} className="font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 border border-white/20 rounded-full text-white/80 bg-black/50 backdrop-blur-md">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="p-6 md:p-10">
+                <h4 className="font-mono text-sm tracking-widest uppercase text-white/50 mb-6 border-b border-white/10 pb-4">
+                  Project Overview
+                </h4>
+                <p className="text-white/80 font-light leading-relaxed text-lg sm:text-xl mb-10">
+                  {selectedProject.detailedDescription}
+                </p>
+                
+                <div className="flex flex-wrap items-center gap-4">
+                  <a href={selectedProject.live} className="flex items-center gap-2 px-6 py-3 bg-white text-black hover:bg-white/90 rounded-full transition-colors font-medium" target="_blank" rel="noreferrer">
+                    <ExternalLink size={18} /> View Live Demo
+                  </a>
+                  <a href={selectedProject.github} className="flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-white transition-colors font-medium" target="_blank" rel="noreferrer">
+                    <Github size={18} /> Source Code
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
