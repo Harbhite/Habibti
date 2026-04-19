@@ -17,8 +17,24 @@ import {
   Users,
   Quote,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Sun,
+  Moon
 } from 'lucide-react';
+
+function ThemeToggle({ isDark, toggle }: { isDark: boolean; toggle: () => void }) {
+  return (
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={toggle}
+      className="fixed top-6 right-6 z-[60] p-3 rounded-full bg-white text-black dark:bg-zinc-900 dark:text-white border border-black/10 dark:border-white/10 shadow-lg backdrop-blur-md cursor-pointer transition-colors"
+      aria-label="Toggle Theme"
+    >
+      {isDark ? <Sun size={20} /> : <Moon size={20} />}
+    </motion.button>
+  );
+}
 
 function Hero() {
   const ref = useRef(null);
@@ -31,8 +47,8 @@ function Hero() {
   const opacityText = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   return (
-    <section ref={ref} className="relative h-screen flex flex-col items-center justify-center overflow-hidden border-b border-white/10">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,#1f1f1f_0%,transparent_60%)] opacity-50"></div>
+    <section ref={ref} className="relative h-screen flex flex-col items-center justify-center overflow-hidden border-b border-black/5 dark:border-white/10">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,#888_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_50%_30%,#1f1f1f_0%,transparent_60%)] opacity-20 dark:opacity-50"></div>
       
       <motion.div 
         style={{ y: yText, opacity: opacityText }}
@@ -42,7 +58,7 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-mono text-xs md:text-sm tracking-[0.2em] uppercase text-white/60 mb-6"
+          className="font-mono text-xs md:text-sm tracking-[0.2em] uppercase text-black/40 dark:text-white/60 mb-6"
         >
           Adegboye Habeeb Temitope
         </motion.div>
@@ -51,7 +67,7 @@ function Hero() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="font-serif text-7xl md:text-[12vw] leading-[0.8] mb-8 tracking-tighter"
+          className="font-serif text-7xl md:text-[12vw] leading-[0.8] mb-8 tracking-tighter text-black dark:text-white"
         >
           Habibi.
         </motion.h1>
@@ -60,19 +76,19 @@ function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.6 }}
-          className="flex flex-wrap justify-center gap-4 text-xs md:text-sm uppercase tracking-widest font-medium text-white/80"
+          className="flex flex-wrap justify-center gap-4 text-xs md:text-sm uppercase tracking-widest font-medium text-black/60 dark:text-white/80"
         >
-          <span className="px-3 py-1 border border-white/20 rounded-full bg-white/5">Creator of Community</span>
-          <span className="px-3 py-1 border border-white/20 rounded-full bg-white/5">Student Leader</span>
-          <span className="px-3 py-1 border border-white/20 rounded-full bg-white/5 inline-flex items-center gap-2">
+          <span className="px-3 py-1 border border-black/10 dark:border-white/20 rounded-full bg-black/5 dark:bg-white/5">Creator of Community</span>
+          <span className="px-3 py-1 border border-black/10 dark:border-white/20 rounded-full bg-black/5 dark:bg-white/5">Student Leader</span>
+          <span className="px-3 py-1 border border-black/10 dark:border-white/20 rounded-full bg-black/5 dark:bg-white/5 inline-flex items-center gap-2">
             Vibe Coder <Flame size={14} className="text-orange-500" />
           </span>
         </motion.div>
       </motion.div>
 
       {/* Decorative lines */}
-      <div className="absolute left-12 top-0 bottom-0 w-px bg-white/10 hidden md:block" />
-      <div className="absolute right-12 top-0 bottom-0 w-px bg-white/10 hidden md:block" />
+      <div className="absolute left-12 top-0 bottom-0 w-px bg-black/5 dark:bg-white/10 hidden md:block" />
+      <div className="absolute right-12 top-0 bottom-0 w-px bg-black/5 dark:bg-white/10 hidden md:block" />
     </section>
   );
 }
@@ -84,7 +100,7 @@ function Marquee() {
   const duplicatedRoles = [...roles, ...roles, ...roles];
 
   return (
-    <div className="py-8 bg-white text-black overflow-hidden flex flex-col justify-center">
+    <div className="py-8 bg-black dark:bg-white text-white dark:text-black overflow-hidden flex flex-col justify-center">
       <motion.div 
         animate={{ x: ["0%", "-33.33%"] }}
         transition={{ ease: "linear", duration: 15, repeat: Infinity }}
@@ -95,7 +111,7 @@ function Marquee() {
             <span className="text-4xl md:text-6xl font-black uppercase tracking-tighter mx-8 font-sans">
               {role}
             </span>
-            <span className="text-2xl text-black/20 text-serif italic">✧</span>
+            <span className="text-2xl opacity-20 text-serif italic">✧</span>
           </div>
         ))}
       </motion.div>
@@ -105,15 +121,15 @@ function Marquee() {
 
 function About() {
   return (
-    <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 items-center border-b border-white/10">
+    <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 items-center border-b border-black/5 dark:border-white/10">
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="font-serif text-5xl md:text-7xl leading-none mb-8">
-          The <span className="italic text-white/50">Duality</span> <br/> of a Nerd.
+        <h2 className="font-serif text-5xl md:text-7xl leading-none mb-8 text-black dark:text-white">
+          The <span className="italic text-black/40 dark:text-white/50">Duality</span> <br/> of a Nerd.
         </h2>
       </motion.div>
       
@@ -122,15 +138,15 @@ function About() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="space-y-6 text-lg md:text-xl text-white/70 font-light leading-relaxed"
+        className="space-y-6 text-lg md:text-xl text-black/60 dark:text-white/70 font-light leading-relaxed"
       >
         <p>
           I exist at the intersection of rigid systems and boundless creativity. 
-          As a <strong className="text-white font-medium">Law student</strong>, I dissect rules. 
-          As a <strong className="text-white font-medium">Developer</strong> and <strong className="text-white font-medium">AI enthusiast</strong>, I build systems. 
-          As a <strong className="text-white font-medium">Poet</strong> and <strong className="text-white font-medium">Writer</strong>, I bend language to its breaking point.
+          As a <strong className="text-black dark:text-white font-medium">Law student</strong>, I dissect rules. 
+          As a <strong className="text-black dark:text-white font-medium">Developer</strong> and <strong className="text-black dark:text-white font-medium">AI enthusiast</strong>, I build systems. 
+          As a <strong className="text-black dark:text-white font-medium">Poet</strong> and <strong className="text-black dark:text-white font-medium">Writer</strong>, I bend language to its breaking point.
         </p>
-        <p className="font-mono text-sm border-l-2 border-white/30 pl-4 text-white/50">
+        <p className="font-mono text-sm border-l-2 border-black/10 dark:border-white/30 pl-4 text-black/40 dark:text-white/50">
           // Occasionally vibe coding at 3am when inspiration strikes.
         </p>
         <p>
@@ -159,8 +175,8 @@ function Interests() {
         viewport={{ once: true }}
         className="mb-20 text-center"
       >
-        <h3 className="font-mono text-sm tracking-widest uppercase text-white/50 mb-4 drop-shadow-sm">Obsessions</h3>
-        <h2 className="font-serif text-4xl md:text-6xl">Reading, Researching, Arguing.</h2>
+        <h3 className="font-mono text-sm tracking-widest uppercase text-black/30 dark:text-white/50 mb-4 drop-shadow-sm">Obsessions</h3>
+        <h2 className="font-serif text-4xl md:text-6xl text-black dark:text-white">Reading, Researching, Arguing.</h2>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -171,16 +187,16 @@ function Interests() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            className={`group relative bg-[#0a0a0a] border border-white/10 p-8 rounded-3xl overflow-hidden hover:bg-[#111] transition-colors ${topic.colSpan || ''}`}
+            className={`group relative bg-zinc-50 dark:bg-[#0a0a0a] border border-black/5 dark:border-white/10 p-8 rounded-3xl overflow-hidden hover:bg-zinc-100 dark:hover:bg-[#111] transition-colors ${topic.colSpan || ''}`}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-black/5 dark:from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <div className="relative z-10 flex flex-col h-full justify-between">
-              <div className="text-white/40 group-hover:text-white transition-colors mb-8">
+              <div className="text-black/30 dark:text-white/40 group-hover:text-black dark:group-hover:text-white transition-colors mb-8">
                 {topic.icon}
               </div>
               <div>
-                <h4 className="font-serif text-2xl md:text-3xl mb-2">{topic.name}</h4>
-                <p className="text-white/50 font-light leading-relaxed group-hover:text-white/70 transition-colors text-sm md:text-base">
+                <h4 className="font-serif text-2xl md:text-3xl mb-2 text-black dark:text-white">{topic.name}</h4>
+                <p className="text-black/40 dark:text-white/50 font-light leading-relaxed group-hover:text-black/70 dark:group-hover:text-white/70 transition-colors text-sm md:text-base">
                   {topic.desc}
                 </p>
               </div>
@@ -217,15 +233,15 @@ const skillCategories = [
 
 function Skills() {
   return (
-    <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-white/10 overflow-hidden">
+    <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-black/5 dark:border-white/10 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         className="mb-20 text-center"
       >
-        <h3 className="font-mono text-sm tracking-widest uppercase text-white/50 mb-4 drop-shadow-sm">Expertise</h3>
-        <h2 className="font-serif text-4xl md:text-6xl">Proficiencies & <span className="italic text-white/50">Powers.</span></h2>
+        <h3 className="font-mono text-sm tracking-widest uppercase text-black/30 dark:text-white/50 mb-4 drop-shadow-sm">Expertise</h3>
+        <h2 className="font-serif text-4xl md:text-6xl text-black dark:text-white">Proficiencies & <span className="italic text-black/30 dark:text-white/50">Powers.</span></h2>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -238,8 +254,8 @@ function Skills() {
             transition={{ duration: 0.6, delay: i * 0.1 }}
             className="group"
           >
-            <div className="flex items-center gap-3 mb-6 text-white/40 group-hover:text-white transition-colors">
-              <div className="p-2 border border-white/10 rounded-lg bg-white/5 group-hover:bg-white group-hover:text-black transition-all">
+            <div className="flex items-center gap-3 mb-6 text-black/30 dark:text-white/40 group-hover:text-black dark:group-hover:text-white transition-colors">
+              <div className="p-2 border border-black/10 dark:border-white/10 rounded-lg bg-black/5 dark:bg-white/5 group-hover:bg-black dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black transition-all">
                 {category.icon}
               </div>
               <h4 className="font-mono text-xs uppercase tracking-[0.2em]">{category.title}</h4>
@@ -253,9 +269,9 @@ function Skills() {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: (i * 0.1) + (j * 0.05) }}
-                  className="flex items-center gap-3 text-white/60 font-light hover:text-white transition-colors decoration-white/20 hover:decoration-white underline underline-offset-4 decoration-1"
+                  className="flex items-center gap-3 text-black/40 dark:text-white/60 font-light hover:text-black dark:hover:text-white transition-colors decoration-black/10 dark:decoration-white/20 hover:decoration-current underline underline-offset-4 decoration-1"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/20"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-black/10 dark:bg-white/20"></span>
                   {skill}
                 </motion.li>
               ))}
@@ -276,12 +292,12 @@ const fragments = [
 
 function Fragments() {
   return (
-    <section className="py-32 bg-zinc-900/30 border-y border-white/5 overflow-hidden">
+    <section className="py-32 bg-zinc-100/50 dark:bg-zinc-900/30 border-y border-black/5 dark:border-white/5 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
           <div className="md:w-1/3">
-            <h3 className="font-mono text-sm tracking-widest uppercase text-white/30 mb-4">Fragments</h3>
-            <h2 className="font-serif text-4xl md:text-5xl italic leading-tight">Poetry in <br/> the Machine.</h2>
+            <h3 className="font-mono text-sm tracking-widest uppercase text-black/20 dark:text-white/30 mb-4">Fragments</h3>
+            <h2 className="font-serif text-4xl md:text-5xl italic leading-tight text-black dark:text-white">Poetry in <br/> the Machine.</h2>
           </div>
           <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-8">
             {fragments.map((fragment, i) => (
@@ -291,10 +307,10 @@ function Fragments() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.2 }}
-                className="relative p-6 border-l border-white/10"
+                className="relative p-6 border-l border-black/10 dark:border-white/10"
               >
-                <Quote size={16} className="text-white/20 mb-4" />
-                <p className="font-serif text-lg md:text-xl text-white/60 leading-relaxed italic">
+                <Quote size={16} className="text-black/10 dark:text-white/20 mb-4" />
+                <p className="font-serif text-lg md:text-xl text-black/40 dark:text-white/60 leading-relaxed italic">
                   {fragment}
                 </p>
               </motion.div>
@@ -378,15 +394,15 @@ function Projects() {
   };
 
   return (
-    <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-white/10">
+    <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-black/5 dark:border-white/10">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         className="mb-20 text-center"
       >
-        <h3 className="font-mono text-sm tracking-widest uppercase text-white/50 mb-4 drop-shadow-sm">Portfolio</h3>
-        <h2 className="font-serif text-4xl md:text-6xl">Selected <span className="italic text-white/50">Works.</span></h2>
+        <h3 className="font-mono text-sm tracking-widest uppercase text-black/30 dark:text-white/50 mb-4 drop-shadow-sm">Portfolio</h3>
+        <h2 className="font-serif text-4xl md:text-6xl text-black dark:text-white">Selected <span className="italic text-black/40 dark:text-white/50">Works.</span></h2>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -398,13 +414,13 @@ function Projects() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="group relative bg-[#0a0a0a] border border-white/10 p-8 rounded-3xl overflow-hidden hover:bg-[#111] cursor-pointer transition-colors flex flex-col justify-between min-h-[320px]"
+            className="group relative bg-zinc-50 dark:bg-[#0a0a0a] border border-black/5 dark:border-white/10 p-8 rounded-3xl overflow-hidden hover:bg-zinc-100 dark:hover:bg-[#111] cursor-pointer transition-colors flex flex-col justify-between min-h-[320px]"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-black/5 dark:from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <div className="relative z-10 flex flex-col h-full pointer-events-none">
               <div>
-                <h4 className="font-serif text-2xl mb-4 text-white group-hover:text-white/90">{project.title}</h4>
-                <p className="text-white/60 font-light leading-relaxed text-sm md:text-base mb-6">
+                <h4 className="font-serif text-2xl mb-4 text-black dark:text-white group-hover:text-black/80 dark:group-hover:text-white/90">{project.title}</h4>
+                <p className="text-black/50 dark:text-white/60 font-light leading-relaxed text-sm md:text-base mb-6">
                   {project.description}
                 </p>
               </div>
@@ -412,17 +428,17 @@ function Projects() {
               <div className="mt-auto space-y-6">
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag, j) => (
-                    <span key={j} className="font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 border border-white/20 rounded-full text-white/50 bg-white/5">
+                    <span key={j} className="font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 border border-black/10 dark:border-white/20 rounded-full text-black/40 dark:text-white/50 bg-black/5 dark:bg-white/5">
                       {tag}
                     </span>
                   ))}
                 </div>
                 
-                <div className="flex items-center gap-4 pt-6 border-t border-white/10 pointer-events-auto" onClick={(e) => e.stopPropagation()}>
-                  <a href={project.github} className="text-white/40 hover:text-white transition-colors p-2 -ml-2" target="_blank" rel="noreferrer" aria-label="GitHub Repository">
+                <div className="flex items-center gap-4 pt-6 border-t border-black/5 dark:border-white/10 pointer-events-auto" onClick={(e) => e.stopPropagation()}>
+                  <a href={project.github} className="text-black/30 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors p-2 -ml-2" target="_blank" rel="noreferrer" aria-label="GitHub Repository">
                     <Github size={20} strokeWidth={1.5} />
                   </a>
-                  <a href={project.live} className="text-white/40 hover:text-white transition-colors p-2" target="_blank" rel="noreferrer" aria-label="Live Demo">
+                  <a href={project.live} className="text-black/30 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors p-2" target="_blank" rel="noreferrer" aria-label="Live Demo">
                     <ExternalLink size={20} strokeWidth={1.5} />
                   </a>
                 </div>
@@ -439,23 +455,23 @@ function Projects() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedProject(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/50 dark:bg-black/80 backdrop-blur-sm"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#0a0a0a] border border-white/10 rounded-3xl shadow-2xl"
+              className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white dark:bg-[#0a0a0a] border border-black/5 dark:border-white/10 rounded-3xl shadow-2xl"
             >
               <button 
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 p-2 bg-black/50 hover:bg-white/10 backdrop-blur-md border border-white/10 rounded-full transition-colors z-20 text-white/70 hover:text-white cursor-pointer"
+                className="absolute top-4 right-4 p-2 bg-white/50 dark:bg-black/50 hover:bg-black/5 dark:hover:bg-white/10 backdrop-blur-md border border-black/5 dark:border-white/10 rounded-full transition-colors z-20 text-black/50 dark:text-white/70 hover:text-black dark:hover:text-white cursor-pointer"
               >
                 <X size={20} />
               </button>
               
-              <div className="relative h-64 sm:h-96 w-full overflow-hidden border-b border-white/10 group/slider">
+              <div className="relative h-64 sm:h-96 w-full overflow-hidden border-b border-black/5 dark:border-white/10 group/slider">
                 <AnimatePresence mode="wait">
                   <motion.img 
                     key={currentImageIndex}
@@ -470,19 +486,19 @@ function Projects() {
                   />
                 </AnimatePresence>
                 
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-[#0a0a0a] via-transparent to-transparent opacity-40"></div>
                 
                 {selectedProject.images.length > 1 && (
                   <>
                     <button 
                       onClick={prevImage}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-md border border-white/10 opacity-0 group-hover/slider:opacity-100 transition-opacity"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 dark:bg-black/50 hover:bg-white/80 dark:hover:bg-black/80 text-black dark:text-white rounded-full backdrop-blur-md border border-black/10 dark:border-white/10 opacity-0 group-hover/slider:opacity-100 transition-opacity"
                     >
                       <ChevronLeft size={20} />
                     </button>
                     <button 
                       onClick={nextImage}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-md border border-white/10 opacity-0 group-hover/slider:opacity-100 transition-opacity"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 dark:bg-black/50 hover:bg-white/80 dark:hover:bg-black/80 text-black dark:text-white rounded-full backdrop-blur-md border border-black/10 dark:border-white/10 opacity-0 group-hover/slider:opacity-100 transition-opacity"
                     >
                       <ChevronRight size={20} />
                     </button>
@@ -490,7 +506,7 @@ function Projects() {
                       {selectedProject.images.map((_, i) => (
                         <div 
                           key={i} 
-                          className={`w-1.5 h-1.5 rounded-full transition-all ${i === currentImageIndex ? 'bg-white w-4' : 'bg-white/30'}`}
+                          className={`w-1.5 h-1.5 rounded-full transition-all ${i === currentImageIndex ? 'bg-black dark:bg-white w-4' : 'bg-black/20 dark:bg-white/30'}`}
                         />
                       ))}
                     </div>
@@ -498,41 +514,41 @@ function Projects() {
                 )}
                 
                 <div className="absolute top-6 left-6 pr-12">
-                  <h3 className="font-serif text-4xl sm:text-5xl mb-2 drop-shadow-lg">{selectedProject.title}</h3>
+                  <h3 className="font-serif text-4xl sm:text-5xl mb-2 drop-shadow-sm text-black dark:text-white">{selectedProject.title}</h3>
                 </div>
               </div>
               
               <div className="p-6 md:p-10">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                   <div className="lg:col-span-2">
-                    <h4 className="font-mono text-xs tracking-widest uppercase text-white/30 mb-6 border-b border-white/5 pb-4">
+                    <h4 className="font-mono text-xs tracking-widest uppercase text-black/20 dark:text-white/30 mb-6 border-b border-black/5 dark:border-white/5 pb-4">
                       Context
                     </h4>
-                    <p className="text-white/80 font-light leading-relaxed text-lg sm:text-xl">
+                    <p className="text-black/70 dark:text-white/80 font-light leading-relaxed text-lg sm:text-xl">
                       {selectedProject.detailedDescription}
                     </p>
                   </div>
                   
                   <div>
-                    <h4 className="font-mono text-xs tracking-widest uppercase text-white/30 mb-6 border-b border-white/5 pb-4">
+                    <h4 className="font-mono text-xs tracking-widest uppercase text-black/20 dark:text-white/30 mb-6 border-b border-black/5 dark:border-white/5 pb-4">
                       Technologies
                     </h4>
                     <div className="flex flex-wrap gap-2 mb-10">
                       {selectedProject.tags.map((tag, j) => (
-                        <span key={j} className="font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 border border-white/20 rounded-full text-white/80 bg-white/5">
+                        <span key={j} className="font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 border border-black/10 dark:border-white/20 rounded-full text-black/60 dark:text-white/80 bg-black/5 dark:bg-white/5">
                           {tag}
                         </span>
                       ))}
                     </div>
                     
-                    <h4 className="font-mono text-xs tracking-widest uppercase text-white/30 mb-6 border-b border-white/5 pb-4">
+                    <h4 className="font-mono text-xs tracking-widest uppercase text-black/20 dark:text-white/30 mb-6 border-b border-black/5 dark:border-white/5 pb-4">
                       Links
                     </h4>
                     <div className="flex flex-col gap-3">
-                      <a href={selectedProject.live} className="flex items-center justify-between px-6 py-3 bg-white text-black hover:bg-white/90 rounded-xl transition-colors font-medium text-sm" target="_blank" rel="noreferrer">
+                      <a href={selectedProject.live} className="flex items-center justify-between px-6 py-3 bg-black dark:bg-white text-white dark:text-black hover:opacity-90 rounded-xl transition-all font-medium text-sm" target="_blank" rel="noreferrer">
                         View Live Demo <ExternalLink size={16} />
                       </a>
-                      <a href={selectedProject.github} className="flex items-center justify-between px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white transition-colors font-medium text-sm" target="_blank" rel="noreferrer">
+                      <a href={selectedProject.github} className="flex items-center justify-between px-6 py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/10 rounded-xl text-black dark:text-white transition-all font-medium text-sm" target="_blank" rel="noreferrer">
                         Source Code <Github size={16} />
                       </a>
                     </div>
@@ -549,25 +565,25 @@ function Projects() {
 
 function Footer() {
   return (
-    <footer className="py-20 md:py-32 bg-white text-black text-center relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,#dcdcdc_0%,transparent_70%)] opacity-50"></div>
+    <footer className="py-20 md:py-32 bg-white dark:bg-black text-black dark:text-white text-center relative overflow-hidden transition-colors">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,#dcdcdc_0%,transparent_70%)] dark:bg-[radial-gradient(ellipse_at_top,#1a1a1a_0%,transparent_70%)] opacity-50"></div>
       
       <div className="relative z-10 max-w-4xl mx-auto px-6">
         <h2 className="font-serif text-5xl md:text-[8vw] leading-[0.8] tracking-tighter mb-8">
           Let's Argue.
         </h2>
-        <p className="font-mono text-sm md:text-base uppercase tracking-widest text-black/50 mb-12">
+        <p className="font-mono text-sm md:text-base uppercase tracking-widest text-black/40 dark:text-white/40 mb-12">
           Or build something. Or write a poem.
         </p>
         
         <div className="flex justify-center gap-6 text-sm font-medium tracking-wide uppercase">
-          <a href="#" className="hover:text-black/50 transition-colors border-b border-black pb-1">Twitter</a>
-          <a href="https://github.com/harbhite" target="_blank" rel="noreferrer" className="hover:text-black/50 transition-colors border-b border-black pb-1">GitHub</a>
-          <a href="#" className="hover:text-black/50 transition-colors border-b border-black pb-1">LinkedIn</a>
-          <a href="#" className="hover:text-black/50 transition-colors border-b border-black pb-1">Email</a>
+          <a href="#" className="hover:opacity-50 transition-colors border-b border-current pb-1">Twitter</a>
+          <a href="https://github.com/harbhite" target="_blank" rel="noreferrer" className="hover:opacity-50 transition-colors border-b border-current pb-1">GitHub</a>
+          <a href="#" className="hover:opacity-50 transition-colors border-b border-current pb-1">LinkedIn</a>
+          <a href="#" className="hover:opacity-50 transition-colors border-b border-current pb-1">Email</a>
         </div>
 
-        <div className="mt-32 font-mono text-xs text-black/30">
+        <div className="mt-32 font-mono text-xs opacity-30">
           © {new Date().getFullYear()} Habibi (Adegboye Habeeb Temitope). Vibe coded occasionally.
         </div>
       </div>
@@ -576,8 +592,19 @@ function Footer() {
 }
 
 export default function App() {
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDark]);
+
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
+    <div className="min-h-screen bg-white transition-colors dark:bg-black text-black dark:text-white selection:bg-black dark:selection:bg-white selection:text-white dark:selection:text-black">
+      <ThemeToggle isDark={isDark} toggle={() => setIsDark(!isDark)} />
       <Hero />
       <Marquee />
       <About />
