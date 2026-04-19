@@ -195,7 +195,7 @@ const projects = [
     detailedDescription: "LexAI is a comprehensive suite aiming to decentralize legal knowledge. By utilizing Retrieval-Augmented Generation (RAG) atop massive corpuses of case law, it allows law students and practitioners to conversationalize with historic judgements. Built with Next.js, Python FastAPI, and LangChain, it solves the immediate pain-point of endless manual cross-referencing.",
     image: "https://picsum.photos/seed/lawlibrary/800/500?blur=2",
     tags: ["Next.js", "Python", "OpenAI", "LangChain"],
-    github: "#",
+    github: "https://github.com/harbhite",
     live: "#"
   },
   {
@@ -204,7 +204,7 @@ const projects = [
     detailedDescription: "In an era of fleeting attention, VerseDrop provides digital permanence to poetry. Writers can mint their stanzas as distinct non-fungible tokens, creating a verified provenance of creative thought. The platform integrates seamlessly with IPFS for storage and uses optimized Solidity contracts to keep minting gas costs incredibly low for emerging artists.",
     image: "https://picsum.photos/seed/poetrybook/800/500?blur=1",
     tags: ["React", "Solidity", "Web3", "Tailwind"],
-    github: "#",
+    github: "https://github.com/harbhite",
     live: "#"
   },
   {
@@ -213,7 +213,7 @@ const projects = [
     detailedDescription: "A fully open-source TypeScript and Node.js toolkit designed to make Decentralized Autonomous Organizations accessible to non-technical community leaders. It abstracts the complexity of deploying governor contracts and provides a plug-and-play frontend for proposing, debating, and executing on-chain proposals transparently.",
     image: "https://picsum.photos/seed/dao/800/500?blur=1",
     tags: ["TypeScript", "Node.js", "Smart Contracts"],
-    github: "#",
+    github: "https://github.com/harbhite",
     live: "#"
   }
 ];
@@ -371,7 +371,7 @@ function Footer() {
         
         <div className="flex justify-center gap-6 text-sm font-medium tracking-wide uppercase">
           <a href="#" className="hover:text-black/50 transition-colors border-b border-black pb-1">Twitter</a>
-          <a href="#" className="hover:text-black/50 transition-colors border-b border-black pb-1">GitHub</a>
+          <a href="https://github.com/harbhite" target="_blank" rel="noreferrer" className="hover:text-black/50 transition-colors border-b border-black pb-1">GitHub</a>
           <a href="#" className="hover:text-black/50 transition-colors border-b border-black pb-1">LinkedIn</a>
           <a href="#" className="hover:text-black/50 transition-colors border-b border-black pb-1">Email</a>
         </div>
