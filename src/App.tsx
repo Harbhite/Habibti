@@ -48,12 +48,12 @@ function Hero() {
   const opacityText = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   return (
-    <section ref={ref} className="relative h-screen flex flex-col items-center justify-center overflow-hidden border-b border-[#1a1a1a]/5 dark:border-white/10">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,#b8b5af_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_50%_30%,#1f1f1f_0%,transparent_60%)] opacity-20 dark:opacity-50"></div>
+    <section ref={ref} className="relative h-screen flex flex-col items-start justify-center overflow-hidden border-b border-[#1a1a1a]/5 dark:border-white/10 px-6 md:px-24">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,#b8b5af_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_20%_30%,#1f1f1f_0%,transparent_60%)] opacity-20 dark:opacity-50"></div>
       
       <motion.div 
         style={{ y: yText, opacity: opacityText }}
-        className="z-10 text-center px-6"
+        className="z-10 text-left max-w-4xl"
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -65,25 +65,70 @@ function Hero() {
         </motion.div>
         
         <motion.h1 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="font-serif text-7xl md:text-[12vw] leading-[0.8] mb-8 tracking-tighter text-[#1a1a1a] dark:text-white"
+          className="font-serif text-7xl md:text-[12vw] leading-[0.8] mb-12 tracking-tighter text-[#1a1a1a] dark:text-white relative inline-block"
         >
-          Habibi.
+          {"Habibi.".split("").map((char, index) => (
+            <motion.span
+              key={index}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                duration: 0.05,
+                delay: 0.5 + index * 0.1,
+                ease: "easeIn",
+              }}
+            >
+              {char}
+            </motion.span>
+          ))}
+          
+          <motion.span
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 0 }}
+            transition={{ 
+              delay: 0.5 + "Habibi.".length * 0.1, 
+              duration: 0.1 
+            }}
+            className="inline-block w-[0.05em] h-[0.9em] bg-orange-500/80 dark:bg-orange-400/80 ml-1 translate-y-[0.1em]"
+          />
+
+          {/* Decorative illustrative line */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ 
+              delay: 1.8, 
+              duration: 1.2, 
+              ease: [0.16, 1, 0.3, 1] 
+            }}
+            className="absolute -bottom-6 left-0 right-0 h-px bg-gradient-to-r from-[#1a1a1a]/20 dark:via-white/30 to-transparent origin-left"
+          />
         </motion.h1>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="flex flex-wrap justify-center gap-4 text-xs md:text-sm uppercase tracking-widest font-medium text-[#1a1a1a]/60 dark:text-white/80"
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 2.2 }}
+          className="flex flex-wrap justify-start gap-6 text-[10px] md:text-xs uppercase tracking-[0.3em] font-medium text-[#1a1a1a]/40 dark:text-white/50"
         >
-          <span className="px-3 py-1 border border-[#1a1a1a]/10 dark:border-white/20 rounded-full bg-[#1a1a1a]/5 dark:bg-white/5">Creator of Community</span>
-          <span className="px-3 py-1 border border-[#1a1a1a]/10 dark:border-white/20 rounded-full bg-[#1a1a1a]/5 dark:bg-white/5">Student Leader</span>
-          <span className="px-3 py-1 border border-[#1a1a1a]/10 dark:border-white/20 rounded-full bg-[#1a1a1a]/5 dark:bg-white/5 inline-flex items-center gap-2">
-            Vibe Coder <Flame size={14} className="text-orange-500" />
-          </span>
+          <motion.span 
+            whileTap={{ scale: 0.95 }}
+            className="cursor-pointer hover:text-[#1a1a1a] dark:hover:text-white transition-colors"
+          >
+            Creator of Community
+          </motion.span>
+          <motion.span 
+            whileTap={{ scale: 0.95 }}
+            className="cursor-pointer hover:text-[#1a1a1a] dark:hover:text-white transition-colors"
+          >
+            Student Leader
+          </motion.span>
+          <motion.span 
+            whileTap={{ scale: 0.95 }}
+            className="cursor-pointer hover:text-[#1a1a1a] dark:hover:text-white transition-colors inline-flex items-center gap-2"
+          >
+            Vibe Coder <Flame size={12} className="text-orange-500/40 group-hover:text-orange-500 transition-colors" />
+          </motion.span>
         </motion.div>
       </motion.div>
 
