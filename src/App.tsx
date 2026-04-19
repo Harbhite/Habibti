@@ -109,26 +109,11 @@ function Hero() {
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 2.2 }}
-          className="flex flex-wrap justify-start gap-6 text-[10px] md:text-xs uppercase tracking-[0.3em] font-medium text-[#1a1a1a]/40 dark:text-white/50"
+          className="max-w-lg text-sm md:text-base leading-relaxed text-[#1a1a1a]/60 dark:text-white/70 text-justify pr-7 -mt-[7px]"
+          style={{ fontFamily: 'Georgia, serif' }}
         >
-          <motion.span 
-            whileTap={{ scale: 0.95 }}
-            className="cursor-pointer hover:text-[#1a1a1a] dark:hover:text-white transition-colors"
-          >
-            Creator of Community
-          </motion.span>
-          <motion.span 
-            whileTap={{ scale: 0.95 }}
-            className="cursor-pointer hover:text-[#1a1a1a] dark:hover:text-white transition-colors"
-          >
-            Student Leader
-          </motion.span>
-          <motion.span 
-            whileTap={{ scale: 0.95 }}
-            className="cursor-pointer hover:text-[#1a1a1a] dark:hover:text-white transition-colors inline-flex items-center gap-2"
-          >
-            Vibe Coder <Flame size={12} className="text-orange-500/40 group-hover:text-orange-500 transition-colors" />
-          </motion.span>
+          Architect of digital whispers, where logic bleeds into language and code becomes a cadence. 
+          A navigator of modern truths, stitching the future with threads of connection and the quiet rhythm of a stanza.
         </motion.div>
       </motion.div>
 
